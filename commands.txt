@@ -1,0 +1,12 @@
+docker build -t danielzemtsovski/docker.io/library/mongo:7 . 
+docker run -d --name aaa -p 8000:8000 sha256:c9f03278b06853c9facdb3966bb1d6d5b802f7b6a1f56673cc3457a1b58d5123
+docker push -t danielzemtsovski/docker.io/library/mongo:7
+oc apply -f mongo-statefulset.yaml
+
+docker build -t danielzemtsovski/danielzemtsovski/threat-api:v1 . 
+docker run -d --name bbb -p 8000:8000 sha256:c9f03278b06853c9facdb3966bb1d6d5b802f7b6a1f56673cc3457a1b58d5123
+docker push -t danielzemtsovski/danielzemtsovski/threat-api:v1
+oc apply -f api-deployment.yaml
+
+oc get project
+oc login --token=sha256~G14X0O74RbZVgwkUpfyikdqT6mhgNN9QwjIWfB-PN8k --server=https://api.rm2.thpm.p1.openshiftapps.com:6443
